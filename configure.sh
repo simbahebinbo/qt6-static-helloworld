@@ -1,2 +1,10 @@
 #!/bin/sh
-mkdir -p build && cd build && conan install ../ --build=missing && cmake -S ../ -B ./
+
+rm -rf build
+mkdir build
+cd build
+conan install .. --build=missing
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=./Release/generators/conan_toolchain.cmake ..
+make
+cd ..
+

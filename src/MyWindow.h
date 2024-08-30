@@ -1,7 +1,3 @@
-//
-// Created by matteo on 13/1/22.
-//
-
 #ifndef TST2_MYWINDOW_H
 #define TST2_MYWINDOW_H
 

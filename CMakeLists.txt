@@ -1,29 +1,40 @@
-cmake_minimum_required(VERSION 3.22.1)
-project(tst2)
+cmake_minimum_required(VERSION 3.15)
 
+project(tst2 LANGUAGES CXX VERSION 1.0.0)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(build/conanbuildinfo.cmake)
-conan_basic_setup()
 
-# assume built-in pthreads on MacOS
-IF(APPLE)
-    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
-    set(CMAKE_HAVE_THREADS_LIBRARY 1)
-    set(CMAKE_USE_WIN32_THREADS_INIT 0)
-    set(CMAKE_USE_PTHREADS_INIT 1)
-    set(THREADS_PREFER_PTHREAD_FLAG ON)
-ENDIF()
+find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
+# 添加插件的静态库
+find_package(Qt6 COMPONENTS QCocoaIntegrationPlugin REQUIRED)
 
-find_package(Qt6 COMPONENTS Core)
-set (PROJECT_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
+add_executable(${PROJECT_NAME}
+        src/main.cpp
+        src/MyWindow.cpp
+        src/MyWindow.h
+)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/MyWindow.cpp  src/MyWindow.h)
 set_target_properties(${PROJECT_NAME} PROPERTIES AUTOMOC ON)
-set_property(GLOBAL PROPERTY CMAKE_AUTOMOC ON)
 
-#target_sources(test PRIVATE src/main.cpp)
-#target_sources(test PRIVATE src/mainwindow.cpp)
+find_library(METAL Metal)
+find_library(QUARTZCORE QuartzCore)
+find_library(IOSURFACE IOSurface)
+find_library(CORESERVICES CoreServices)
+find_library(UNIFORMTYPEIDENTIFIERS UniformTypeIdentifiers)
 
+# 链接静态库
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        Qt6::Widgets
+        Qt6::Core
+        Qt6::QCocoaIntegrationPlugin
+        ${METAL}
+        ${QUARTZCORE}
+        ${IOSURFACE}
+        ${CORESERVICES}
+        ${UNIFORMTYPEIDENTIFIERS}
+)
 
-target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})

@@ -1,5 +1,7 @@
 [requires]
-qt/6.2.2
-
+qt/6.7.1
 [generators]
-cmake
+CMakeDeps
+CMakeToolchain
+[layout]
+cmake_layout

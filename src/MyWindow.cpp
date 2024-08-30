@@ -1,9 +1,6 @@
-//
-// Created by matteo on 13/1/22.
-//
-
 #include "MyWindow.h"
 #include <iostream>
+#include <QWidget>
 
 MyWindow::MyWindow(QWidget *parent) :
         QWidget(parent) {

@@ -1,2 +1,4 @@
 #!/bin/sh
-./build/bin/tst2
+
+./build/tst2
+
