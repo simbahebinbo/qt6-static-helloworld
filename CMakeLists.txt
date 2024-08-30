@@ -8,6 +8,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 
+#优先查找静态库
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+set(BUILD_SHARED_LIBS OFF)
+
+# 关闭动态插件加载
+set(QT_NO_DYNAMIC_CAST TRUE)
+
 find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
 # 添加插件的静态库
 find_package(Qt6 COMPONENTS QCocoaIntegrationPlugin REQUIRED)
